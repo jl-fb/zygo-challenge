@@ -2,9 +2,9 @@
   <q-card>
     <modal-header>Adicionar tarefa</modal-header>
     <q-form @submit.prevent="onSubmit" @reset="onReset" ref="form">
-      <q-card style="min-width: 350px">
+      <q-card style="max-width: 400px">
         <q-card-section class="q-pt-none">
-          <modal-task-name :title.sync="toSubmit.title" ref="modalTaskName" />
+          <modal-task-name :title.sync="toSubmit.title" ref="modalTaskName " />
         </q-card-section>
 
         <modal-buttons />
@@ -37,8 +37,9 @@ export default {
   methods: {
     ...mapActions("tasks", ["addTask"]),
     onSubmit() {
-      this.$refs.modalTaskName.$refs.title.validate();
-      if (!this.$refs.modalTaskName.$refs.title.hasError) {
+      console.log("AQUIIUIUIU", this.$refs.form);
+      this.$refs.form.validate();
+      if (!this.$refs.form.hasError) {
         console.log("foi", this.toSubmit);
         this.submitTask(this.toSubmit);
       }
@@ -56,4 +57,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.q-pt-none {
+  min-width: 300px;
+}
+</style>

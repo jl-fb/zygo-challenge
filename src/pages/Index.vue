@@ -1,15 +1,15 @@
 <template>
   <q-page class="bg-grey-3  column">
-    <task-todo
-      :tasks="tasksTodo"
-      v-if="!hasError && Object.keys(tasksTodo).length"
-    />
-    <hr />
+    <no-tasks-banner
+      v-if="!hasError && !Object.keys(tasksTodo).length"
+    ></no-tasks-banner>
+    <task-todo :tasks="tasksTodo" v-else />
+    <hr v-if="!hasError && Object.keys(tasksTodo).length" />
     <tasks-completed
       :tasks="tasksCompleted"
       v-if="!hasError && Object.keys(tasksCompleted).length"
     />
-    <div v-else class="text-center">
+    <div v-else-if="hasError" class="text-center">
       <h3>Desculpe...</h3>
       <h5>=(</h5>
     </div>
@@ -38,7 +38,8 @@ export default {
   components: {
     AddTask: require("components/Tasks/Modals/AddTask").default,
     TaskTodo: require("components/Tasks/TasksTodo").default,
-    TasksCompleted: require("components/Tasks/TasksCompleted").default
+    TasksCompleted: require("components/Tasks/TasksCompleted").default,
+    NoTasksBanner: require("components/Tasks/NoTasksBanner").default
   },
   data() {
     return {
@@ -74,6 +75,7 @@ export default {
     this.getTasks()
       .then(resp => (this.tasks = resp))
       .catch(e => console.log(e));
+    this.$root.$on("showAddTask", () => (this.showAddTask = true));
   }
 };
 </script>
