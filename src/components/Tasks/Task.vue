@@ -24,6 +24,7 @@
           color="deep-purple-12"
           icon="edit"
           @click.stop="showEditTask = true"
+          v-if="!task.completed"
         />
 
         <q-btn

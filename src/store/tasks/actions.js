@@ -17,3 +17,7 @@ export function updateTask({ commit }, payload) {
 export function deleteTask({ commit }, id) {
   commit("deleteTask", id);
 }
+
+export function setSearch({ commit }, payload) {
+  commit("setSearch", payload);
+}

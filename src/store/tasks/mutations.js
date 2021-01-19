@@ -11,3 +11,7 @@ export function updateTask(state, payload) {
 export function deleteTask(state, payload) {
   Vue.delete(state.tasks, payload);
 }
+
+export function setSearch(state, payload) {
+  state.search = payload;
+}

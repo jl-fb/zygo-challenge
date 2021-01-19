@@ -12,7 +12,17 @@ export default function() {
         order: 2,
         completed: false,
         url: "eeerer"
+      },
+      url3: {
+        title: "Abelha",
+        order: 2,
+        completed: false,
+        url: "eeerer"
       }
-    }
+    },
+    search: "",
+    sort: "title",
+    onlyCompleted: false,
+    onlyTodo: false
   };
 }

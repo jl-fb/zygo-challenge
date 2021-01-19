@@ -37,7 +37,6 @@ export default {
   methods: {
     ...mapActions("tasks", ["addTask"]),
     onSubmit() {
-      console.log("AQUIIUIUIU", this.$refs.form);
       this.$refs.form.validate();
       if (!this.$refs.form.hasError) {
         console.log("foi", this.toSubmit);
