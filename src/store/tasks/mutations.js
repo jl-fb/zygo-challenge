@@ -1,7 +1,6 @@
 import Vue from "vue";
 
 export function addTask(state, payload) {
-  console.log(payload);
   Vue.set(state.tasks, payload.id, payload.task);
 }
 export function updateTask(state, payload) {

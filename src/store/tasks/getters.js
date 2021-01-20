@@ -39,7 +39,6 @@ export function sortedTasks(state) {
   let tasksSorted = {};
 
   let keysOrdered = Object.keys(state.tasks);
-  console.log("kes", keysOrdered);
   const ordered = keysOrdered.sort((a, b) => {
     let taskA = state.tasks[a][state.sort].toLowerCase();
     let taskB = state.tasks[b][state.sort].toLowerCase();
@@ -48,7 +47,7 @@ export function sortedTasks(state) {
     else return 0;
   });
 
-  keysOrdered.forEach(key => {
+  ordered.forEach(key => {
     tasksSorted[key] = state.tasks[key];
   });
   return tasksSorted;

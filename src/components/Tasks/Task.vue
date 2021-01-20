@@ -59,6 +59,7 @@ export default {
   },
   methods: {
     ...mapActions("tasks", ["updateTask", "deleteTask"]),
+
     promptToDelete(id) {
       this.$q
         .dialog({

@@ -1,5 +1,11 @@
 <template>
-  <q-input filled v-model="searchField" label="Buscar" class="col">
+  <q-input
+    filled
+    v-model="searchField"
+    label="Buscar"
+    class="col"
+    @keyup="searchField = ''"
+  >
     <template v-slot:append>
       <q-icon
         v-if="searchField !== ''"

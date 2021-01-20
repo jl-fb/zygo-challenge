@@ -7,7 +7,7 @@
           <modal-task-name :title.sync="toSubmit.title" ref="modalTaskName" />
         </q-card-section>
 
-        <modal-buttons />
+        <modal-buttons>Editar</modal-buttons>
       </q-card>
     </q-form>
   </q-card>

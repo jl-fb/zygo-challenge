@@ -7,7 +7,7 @@
           <modal-task-name :title.sync="toSubmit.title" ref="modalTaskName " />
         </q-card-section>
 
-        <modal-buttons />
+        <modal-buttons>Adicionar</modal-buttons>
       </q-card>
     </q-form>
   </q-card>
@@ -39,7 +39,6 @@ export default {
     onSubmit() {
       this.$refs.form.validate();
       if (!this.$refs.form.hasError) {
-        console.log("foi", this.toSubmit);
         this.submitTask(this.toSubmit);
       }
     },

@@ -1,56 +1,79 @@
 <template>
-  <q-page class="bg-grey-3  column">
-    <div class="row q-mb-lg row ">
-      <search />
-      <div class="col-3 q-mr-sm self-center">
-        <q-toggle v-model="showOnlyTodo" label="À fazer" />
-        <q-toggle v-model="showOnlyCompleted" label="Completas" />
+  <q-page>
+    <div class="absolute full-width full-height bg-grey-3 column">
+      <div class="row q-mb-lg">
+        <div class="col-12 col-md ">
+          <search />
+        </div>
+
+        <div
+          style="max-width:250px"
+          class="col-12 col-md q-mr-sm self-center flex q-pr-lg"
+        >
+          <q-toggle v-model="showOnlyTodo" label="À fazer" />
+          <q-toggle v-model="showOnlyCompleted" label="Completas" />
+        </div>
+      </div>
+
+      <p
+        v-if="
+          search &&
+            !Object.keys(tasksTodo).length &&
+            !Object.keys(tasksCompleted).length
+        "
+        class="q-ml-sm text-subtitle2"
+      >
+        Não foram encontrados resultados...
+      </p>
+
+      <q-scroll-area class="q-scroll-tasks">
+        <no-tasks-banner
+          v-if="!hasError && !Object.keys(tasksTodo).length && !search"
+        ></no-tasks-banner>
+
+        <task-todo
+          :tasks="tasksTodo"
+          v-if="
+            (!hasError &&
+              Object.keys(tasksTodo).length &&
+              !showOnlyCompleted) ||
+              (showOnlyTodo && showOnlyCompleted)
+          "
+        />
+
+        <hr
+          v-if="
+            !hasError && Object.keys(tasksTodo).length && !showOnlyCompleted
+          "
+        />
+
+        <tasks-completed
+          class="q-mb-xl"
+          :tasks="tasksCompleted"
+          v-if="
+            (!hasError &&
+              Object.keys(tasksCompleted).length &&
+              !showOnlyTodo) ||
+              (showOnlyTodo && showOnlyCompleted)
+          "
+        />
+        <div v-else-if="hasError" class="text-center">
+          <h3>Desculpe...</h3>
+          <h5>=(</h5>
+        </div>
+      </q-scroll-area>
+
+      <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
+        <q-btn
+          size="24px"
+          round
+          color="deep-purple-5 "
+          icon="add"
+          @click="showAddTask = true"
+          class="all-pointer-events"
+        />
       </div>
     </div>
-    <p
-      v-if="
-        search &&
-          !Object.keys(tasksTodo).length &&
-          !Object.keys(tasksCompleted).length
-      "
-      class="q-ml-sm text-subtitle2"
-    >
-      Não foram encontrados resultados...
-    </p>
-    <no-tasks-banner
-      v-if="!hasError && !Object.keys(tasksTodo).length && !search"
-    ></no-tasks-banner>
-    <task-todo
-      :tasks="tasksTodo"
-      v-if="
-        (!hasError && Object.keys(tasksTodo).length && !showOnlyCompleted) ||
-          (showOnlyTodo && showOnlyCompleted)
-      "
-    />
-    <hr
-      v-if="!hasError && Object.keys(tasksTodo).length && !showOnlyCompleted"
-    />
-    <tasks-completed
-      :tasks="tasksCompleted"
-      v-if="
-        (!hasError && Object.keys(tasksCompleted).length && !showOnlyTodo) ||
-          (showOnlyTodo && showOnlyCompleted)
-      "
-    />
-    <div v-else-if="hasError" class="text-center">
-      <h3>Desculpe...</h3>
-      <h5>=(</h5>
-    </div>
-    <div class="absolute-bottom text-center q-mb-lg">
-      <q-btn
-        size="24px"
-        round
-        color="deep-purple-5 "
-        icon="add"
-        @click="showAddTask = true"
-      />
-    </div>
-
     <q-dialog persistent v-model="showAddTask">
       <add-task @close="showAddTask = false" />
     </q-dialog>
@@ -82,48 +105,13 @@ export default {
   computed: {
     ...mapGetters("tasks", ["tasksTodo", "tasksCompleted"]),
     ...mapState("tasks", ["search"])
-
-    // showOnlyCompleted: {
-    //   get() {
-    //     return this.onlyCompleted;
-    //   },
-    //   set(value) {
-    //     this.showOnlyCompleted();
-    //   }
-    // },
-    // showOnlyTodo: {
-    //   get() {
-    //     return this.onlyCompleted;
-    //   },
-    //   set(value) {
-    //     this.showOnlyCompleted();
-    //   }
-    // }
   },
   methods: {
-    async getTasks() {
-      let data = [];
-      try {
-        this.$q.loading.show();
-        const resp = await fetch(api.baseURL);
-        if (!resp.ok) {
-          this.hasError = true;
-        }
-
-        data = await resp.json();
-        this.$q.loading.hide();
-      } catch (error) {
-        console.error("Fetch data error", error);
-        return error;
-        this.$q.loading.hide();
-      }
-      return data;
-    }
+    ...mapActions("tasks", ["readDataFromAPI"])
   },
+
   mounted() {
-    this.getTasks()
-      .then(resp => (this.tasks = resp))
-      .catch(e => console.log(e));
+    this.readDataFromAPI();
     this.$root.$on("showAddTask", () => (this.showAddTask = true));
   }
 };
@@ -135,11 +123,16 @@ export default {
     color: #bbb;
   }
 }
+
 .q-toggle__inner--truthy .q-toggle__thumb:after {
   background-color: #412296;
 }
 
 .q-toggle__thumb:after {
   background: rgb(218, 218, 218);
+}
+.q-scroll-tasks {
+  display: flex;
+  flex-grow: 1;
 }
 </style>

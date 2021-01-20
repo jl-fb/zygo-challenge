@@ -6,9 +6,9 @@
     Sem tarefas no momento!
     <template v-slot:action>
       <q-btn
-        flat
+        outline
         color="deep-purple-5"
-        label="Add tarefa"
+        label="Adicionar"
         @click="$root.$emit('showAddTask')"
       />
     </template>
