@@ -65,7 +65,7 @@
 
       <div class="absolute-bottom text-center q-mb-lg no-pointer-events">
         <q-btn
-          size="24px"
+          size="18px"
           round
           color="deep-purple-5 "
           icon="add"
@@ -73,7 +73,7 @@
           class="all-pointer-events"
         />
         <q-btn
-          size="24px"
+          size="18px"
           round
           color="red-10"
           icon="delete"

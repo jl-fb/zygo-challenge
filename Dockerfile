@@ -12,4 +12,6 @@ COPY . .
 
 EXPOSE 8080
 
+CMD ["quasar", "build", "-m", "pwa"]
+
 CMD ["quasar", "dev", "-m", "pwa"]
