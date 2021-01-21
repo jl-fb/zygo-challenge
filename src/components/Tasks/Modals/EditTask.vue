@@ -37,7 +37,6 @@ export default {
     onSubmit() {
       this.$refs.modalTaskName.$refs.title.validate();
       if (!this.$refs.modalTaskName.$refs.title.hasError) {
-        console.log("foi", this.toSubmit);
         this.submitTask(this.toSubmit);
       }
     },

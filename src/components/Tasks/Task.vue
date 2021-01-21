@@ -3,14 +3,9 @@
     v-ripple
     :class="{ 'done bg-deep-purple-1': task.completed }"
     @click="updateTask({ id: id, updates: { completed: !task.completed } })"
-    clickable
   >
     <q-item-section avatar>
-      <q-checkbox
-        v-model="task.completed"
-        color="deep-purple-7 "
-        class="no-pointers-events"
-      />
+      <q-checkbox v-model="task.completed" color="deep-purple-7 " />
     </q-item-section>
     <q-item-section>
       <q-item-label>{{ task.title }}</q-item-label>

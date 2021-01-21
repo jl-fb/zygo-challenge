@@ -72,6 +72,14 @@
           @click="showAddTask = true"
           class="all-pointer-events"
         />
+        <q-btn
+          size="24px"
+          round
+          color="red-10"
+          icon="delete"
+          @click="promptToDeleteAll()"
+          class="all-pointer-events q-ml-lg"
+        />
       </div>
     </div>
     <q-dialog persistent v-model="showAddTask">
@@ -107,7 +115,21 @@ export default {
     ...mapState("tasks", ["search"])
   },
   methods: {
-    ...mapActions("tasks", ["readDataFromAPI"])
+    ...mapActions("tasks", ["readDataFromAPI", "deleteAllTasks"]),
+
+    promptToDeleteAll() {
+      this.$q
+        .dialog({
+          title: "Deletar todas as tarefas",
+          message: "Tem certaza que deseja deletar todas as tarefas?",
+          cancel: true,
+          persistent: true,
+          color: "red-12"
+        })
+        .onOk(() => {
+          this.deleteAllTasks();
+        });
+    }
   },
 
   mounted() {
