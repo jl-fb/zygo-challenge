@@ -98,6 +98,8 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 The app is a PWA wich can be installed in you desktop or smartphone.
 
+Link to deploy version [zigo-challenge](https://zygo-challenge-pm0pjwuru.vercel.app)
+
 <br/>
 <br/>
 
